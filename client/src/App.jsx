@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BookOpen } from 'lucide-react';
 import Navbar from './components/Navbar';
 import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
@@ -17,6 +18,7 @@ export default function App() {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showCertificateModal, setShowCertificateModal] = useState(false);
   const [certificateData, setCertificateData] = useState(null);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Course overview and curriculum
   const [courseData, setCourseData] = useState(null);
@@ -243,24 +245,39 @@ export default function App() {
         studentStats={courseData?.studentStats}
         onOpenProfile={() => setShowProfileModal(true)}
         onOpenCertificate={() => handleOpenCertificate()}
+        onToggleSidebar={() => setMobileSidebarOpen(prev => !prev)}
       />
 
       {/* Main View Area */}
       {viewMode === 'admin' ? (
         <AdminDashboard onViewCertificate={(sId) => handleOpenCertificate(sId)} />
       ) : (
-        <div className="flex-1 flex flex-col md:flex-row">
+        <div className="flex-1 flex flex-col md:flex-row relative">
           <SidebarCurriculum
             modules={courseData?.modules}
             currentLessonId={selectedLessonId}
             onSelectLesson={handleSelectLesson}
             studentStats={courseData?.studentStats}
+            isOpenMobile={mobileSidebarOpen}
+            onCloseMobile={() => setMobileSidebarOpen(false)}
           />
           <LessonViewer
             lessonId={selectedLessonId}
             onLessonCompleted={handleLessonCompleted}
             onSelectNextLesson={handleSelectNextLesson}
+            onOpenCurriculum={() => setMobileSidebarOpen(true)}
           />
+
+          {/* Floating Mobile Button to quickly open Curriculum */}
+          {!mobileSidebarOpen && (
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className="md:hidden fixed bottom-5 left-4 z-30 flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg shadow-blue-600/40 text-xs font-bold transition active:scale-95"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>មាតិកា ({courseData?.studentStats?.completedCount || 0}/{courseData?.studentStats?.totalLessons || 938})</span>
+            </button>
+          )}
         </div>
       )}
 

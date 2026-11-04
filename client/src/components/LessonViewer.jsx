@@ -5,7 +5,7 @@ import SlideshowPlayer from './SlideshowPlayer';
 import QuizPlayer from './QuizPlayer';
 import AssignmentPlayer from './AssignmentPlayer';
 
-export default function LessonViewer({ lessonId, onLessonCompleted, onSelectNextLesson }) {
+export default function LessonViewer({ lessonId, onLessonCompleted, onSelectNextLesson, onOpenCurriculum }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -105,8 +105,19 @@ export default function LessonViewer({ lessonId, onLessonCompleted, onSelectNext
     <main className="flex-1 overflow-y-auto p-4 sm:p-8 bg-slate-50">
       
       {/* Top Header / Breadcrumb */}
-      <div className="max-w-4xl mx-auto mb-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div className="max-w-4xl mx-auto mb-6 bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
         <div>
+          {/* Mobile curriculum button */}
+          {onOpenCurriculum && (
+            <button
+              onClick={onOpenCurriculum}
+              className="md:hidden inline-flex items-center gap-1.5 px-3 py-1.5 mb-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold border border-blue-200 active:scale-95 transition shadow-sm"
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>📖 មើលមាតិកាមេរៀន (Curriculum)</span>
+            </button>
+          )}
+
           <div className="text-xs font-semibold text-blue-600 flex items-center gap-1.5 mb-1">
             <span>{meta.moduleTitle}</span>
             {meta.submoduleTitle && (

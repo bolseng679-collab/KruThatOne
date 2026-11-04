@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, ChevronRight, Lock, CheckCircle2, PlayCircle, BookOpen, Layers, HelpCircle, PenTool, Search } from 'lucide-react';
+import { ChevronDown, ChevronRight, Lock, CheckCircle2, PlayCircle, BookOpen, Search, X } from 'lucide-react';
 
-export default function SidebarCurriculum({ modules, currentLessonId, onSelectLesson, studentStats }) {
+export default function SidebarCurriculum({
+  modules,
+  currentLessonId,
+  onSelectLesson,
+  studentStats,
+  isOpenMobile,
+  onCloseMobile
+}) {
   const [openModules, setOpenModules] = useState({ 0: true, 1: true });
   const [openSubmodules, setOpenSubmodules] = useState({ 0: true });
   const [searchTerm, setSearchTerm] = useState('');
@@ -37,23 +44,27 @@ export default function SidebarCurriculum({ modules, currentLessonId, onSelectLe
       return;
     }
     onSelectLesson(les.id);
+    // On mobile, close sidebar immediately after selecting a lesson
+    if (onCloseMobile) {
+      onCloseMobile();
+    }
   };
 
   const getTypeBadge = (type) => {
     switch (type) {
       case 'reading': return <span className="text-[10px] bg-sky-50 text-sky-700 px-1.5 py-0.5 rounded font-medium">អាន</span>;
       case 'slideshow': return <span className="text-[10px] bg-purple-50 text-purple-700 px-1.5 py-0.5 rounded font-medium">ស្លាយ</span>;
-      case 'quiz': return <span className="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-medium font-bold">តេស្ត ≥80%</span>;
+      case 'quiz': return <span className="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded font-bold">តេស្ត ≥80%</span>;
       case 'assignment': return <span className="text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-medium">កិច្ចការ</span>;
       default: return null;
     }
   };
 
-  return (
-    <aside className="w-80 lg:w-96 bg-white border-r border-slate-200 flex flex-col h-[calc(100vh-4rem)] sticky top-16 shadow-sm select-none">
-      
+  // The inner content of the curriculum list (reused in desktop and mobile drawer)
+  const curriculumContent = (
+    <div className="flex flex-col h-full bg-white select-none">
       {/* Search Header */}
-      <div className="p-3.5 border-b border-slate-200 bg-slate-50/50">
+      <div className="p-3.5 border-b border-slate-200 bg-slate-50/70">
         <div className="relative">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -236,7 +247,50 @@ export default function SidebarCurriculum({ modules, currentLessonId, onSelectLe
           );
         })}
       </div>
+    </div>
+  );
 
-    </aside>
+  return (
+    <>
+      {/* 1. Desktop Sidebar (Always visible on md screens and up) */}
+      <aside className="hidden md:flex w-80 lg:w-96 border-r border-slate-200 flex-col h-[calc(100vh-4rem)] sticky top-16 shadow-sm shrink-0">
+        {curriculumContent}
+      </aside>
+
+      {/* 2. Mobile Drawer (Only visible when toggled open on phone) */}
+      {isOpenMobile && (
+        <div className="fixed inset-0 z-50 md:hidden flex">
+          {/* Dark backdrop overlay - clicking outside closes drawer */}
+          <div
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+            onClick={onCloseMobile}
+          />
+
+          {/* Drawer content sliding in from left */}
+          <div className="relative w-5/6 max-w-sm bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-200">
+            {/* Header with clear Close button */}
+            <div className="p-3.5 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-blue-600" />
+                <h2 className="font-bold text-sm text-slate-800">មាតិកាវគ្គសិក្សា</h2>
+              </div>
+              <button
+                onClick={onCloseMobile}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 transition active:scale-95"
+                title="បិទមាតិកា"
+              >
+                <X className="w-4 h-4" />
+                <span>បិទ</span>
+              </button>
+            </div>
+
+            {/* Curriculum body */}
+            <div className="flex-1 overflow-hidden">
+              {curriculumContent}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
