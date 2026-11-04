@@ -1,0 +1,52 @@
+{
+  "users": [
+    {
+      "id": "admin_1",
+      "fullName": "Teacher That (Admin)",
+      "username": "teacherThat",
+      "passwordHash": "195bc092dcdbac628ec543a5f8d177d170243ba3bf9692a483431b8075179a7b",
+      "phone": "012345678",
+      "role": "admin",
+      "inviteCodeUsed": "SYSTEM_ADMIN",
+      "createdAt": "2026-11-03T22:54:09.157Z",
+      "progress": {
+        "completedLessons": [],
+        "currentLessonIndex": 1,
+        "quizScores": {},
+        "assignmentSubmissions": {}
+      }
+    }
+  ],
+  "codes": [
+    {
+      "code": "12345678901",
+      "createdBy": "teacherThat",
+      "note": "លេខកូដទូទៅសម្រាប់ថ្នាក់រៀនទី១",
+      "maxUses": 100,
+      "usedCount": 0,
+      "usedBy": [],
+      "createdAt": "2026-11-03T22:54:09.158Z",
+      "active": true
+    },
+    {
+      "code": "98765432109",
+      "createdBy": "teacherThat",
+      "note": "លេខកូដសម្រាប់ថ្នាក់រៀនទី២",
+      "maxUses": 50,
+      "usedCount": 0,
+      "usedBy": [],
+      "createdAt": "2026-11-03T22:54:09.158Z",
+      "active": true
+    },
+    {
+      "code": "40603712345",
+      "createdBy": "teacherThat",
+      "note": "លេខកូដពិសេសពីលោកគ្រូ teacherThat",
+      "maxUses": 200,
+      "usedCount": 0,
+      "usedBy": [],
+      "createdAt": "2026-11-03T22:54:09.158Z",
+      "active": true
+    }
+  ]
+}

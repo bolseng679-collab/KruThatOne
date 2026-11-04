@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Kantumruy Pro', 'Noto Sans Khmer', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom styling for lesson reading HTML content */
+.lesson-html-content {
+  color: #1e293b;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.lesson-html-content h1, .lesson-html-content h2, .lesson-html-content h3 {
+  color: #0f766e;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.lesson-html-content p {
+  margin-bottom: 1rem;
+}
+
+.lesson-html-content img {
+  border-radius: 0.75rem;
+  max-width: 100%;
+  height: auto;
+  margin: 1.25rem auto;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.lesson-html-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+.lesson-html-content th, .lesson-html-content td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.lesson-html-content th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.lesson-html-content ul, .lesson-html-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.lesson-html-content li {
+  margin-bottom: 0.5rem;
+}
+
